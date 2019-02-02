@@ -1,0 +1,50 @@
+.gameOver {
+    background: url('./images/background.jpeg') no-repeat center / cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.gameOverTitle {
+    font-size: 120px;
+    font-weight: 900;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.gameOverScore {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.flyWords {
+    position: relative;
+    height: 200px;
+    width: 100%;
+}
+
+.button {
+    border: 1px solid var(--color-white);
+    padding: 12px 18px;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 50px;
+    transition: background 0.2s ease-in-out;
+
+    &:hover,
+    &:focus {
+        color: var(--color-font);
+        background: var(--color-white);
+    }
+}

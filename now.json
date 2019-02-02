@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "name": "dota2quiz",
+    "builds": [{ "src": "package.json", "use": "@now/static-build" }],
+    "routes": [
+        {
+            "src": "^/static/(.*)",
+            "dest": "/static/$1",
+            "headers": { "cache-control": "s-maxage=0" }
+        },
+        {
+            "src": "^/images/items/(.*)",
+            "dest": "/images/items/$1",
+            "headers": { "cache-control": "s-maxage=0" }
+        },
+        {
+            "src": "^/(.*)",
+            "dest": "/index.html"
+        }
+    ]
+}

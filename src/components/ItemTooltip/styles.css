@@ -1,0 +1,165 @@
+.tooltip {
+    color: rgba(160, 182, 191, 0.9);
+    font-size: 13px;
+    line-height: 18px;
+    box-shadow: 0 0 3px rgba(10, 10, 10, 0.4);
+    border: 1px solid #242f39;
+    border-radius: 1px;
+    background: #242f39;
+    padding: 4px;
+}
+
+.header {
+    margin: -4px;
+    padding: 8px 8px 4px;
+    background-color: rgba(46, 55, 64, 0.9);
+}
+
+.avatar {
+    float: left;
+    margin: 0 8px 0 0;
+}
+
+.image {
+    position: relative;
+    display: inline-block;
+    margin-right: 2px;
+    overflow: hidden;
+}
+
+.name {
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 2px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.shopIcons {
+    opacity: 0.8;
+    display: inline-block;
+
+    & img {
+        display: inline-block;
+        vertical-align: top;
+        height: 24px;
+        margin-left: -4px;
+    }
+}
+
+.price {
+    display: inline-block;
+    font-weight: bold;
+    color: #fff;
+}
+
+.goldIcon img {
+    transform: scale(1.2, 1.2);
+    height: 16px;
+    margin-right: 8px;
+    vertical-align: middle;
+    display: inline;
+}
+
+.attrib {
+    padding: 6px 0 0;
+}
+
+.description {
+    position: relative;
+}
+
+.descriptionBlock {
+    color: rgba(197, 196, 226, 0.83);
+    background-color: rgba(48, 52, 86, 0.83);
+    margin-top: 8px;
+    padding: 0 4px 4px;
+
+    & h1 {
+        color: rgba(242, 241, 255, 0.95);
+        font-weight: bold;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.2) 0%, rgba(125, 185, 232, 0) 100%);
+        padding: 4px 5px;
+        position: relative;
+        left: -4px;
+        margin-bottom: 4px;
+
+        &:not(:first-child) {
+            margin-top: 8px;
+        }
+    }
+}
+
+.cooldownAndCost {
+    position: absolute;
+    right: 6px;
+    top: 0;
+
+    & .cooldown,
+    & .manacost {
+        display: inline-block;
+        padding: 0;
+        margin-top: 2px;
+        margin-left: 8px;
+        min-width: 0px;
+        float: right;
+        vertical-align: middle;
+
+        & img {
+            height: 16px;
+            margin-right: 8px;
+            vertical-align: middle;
+            display: inline;
+        }
+    }
+}
+
+.lore {
+    margin: 8px 0 0 0;
+    font-size: 0.95em;
+    color: rgba(160, 182, 191, 0.9);
+    padding: 6px;
+    font-style: italic;
+    background-color: #1c242d;
+}
+
+.notes {
+    margin-top: 8px;
+    background-color: #6f8498;
+    color: #0a0a0a;
+    padding: 4px;
+    line-height: 16px;
+}
+
+.build {
+    display: inline-block;
+    padding: 0 16px 0 0;
+}
+
+.title {
+    font-size: 12px;
+    color: #d9d9d9;
+    margin: 8px 0 0 0;
+}
+
+.order {
+    margin: 4px 0 0 0;
+}
+
+.buildItem {
+    display: inline-block;
+    margin: 0 4px 0 0;
+}
+
+.buildItemImage {
+    height: 24px;
+}
+
+.buildIcon {
+    text-align: center;
+}
+
+.buildItemCost {
+    font-size: 12px;
+    color: #fbb829;
+    text-align: center;
+}
