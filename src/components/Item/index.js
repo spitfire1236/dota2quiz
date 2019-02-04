@@ -10,11 +10,14 @@ export default class Item extends Component {
         if (onClick) onClick(name);
     };
     render() {
-        const { dname, img } = this.props;
+        const { dname, img, webp } = this.props;
 
         return (
             <div className={styles.inner} onClick={this.handleClick}>
-                <img src={img || placeholder} alt={dname} title={dname} />
+                <picture className={styles.image}>
+                    <source srcSet={webp} type="image/webp" />
+                    <img srcSet={img} alt={dname} title={dname} />
+                </picture>
             </div>
         );
     }

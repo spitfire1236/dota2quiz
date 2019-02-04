@@ -59,9 +59,15 @@
         "eslint-plugin-import": "^2.16.0",
         "eslint-plugin-jsx-a11y": "^6.2.0",
         "eslint-plugin-react": "^7.12.4",
+        "imagemin": "^6.1.0",
+        "imagemin-jpegtran": "^6.0.0",
+        "imagemin-pngquant": "^7.0.0",
+        "imagemin-webp": "^5.0.0",
         "request": "^2.88.0",
+        "rimraf": "^2.6.3",
         "serve": "^10.1.1",
         "style-loader": "^0.23.1",
-        "webpack-dev-server": "^3.1.14"
+        "webpack-dev-server": "^3.1.14",
+        "why-did-you-update": "^1.0.6"
     }
 }

@@ -6,6 +6,10 @@
 }
 
 .inner {
+    margin-top: 50px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,6 +26,7 @@
     align-items: center;
     justify-content: center;
     margin: 15px -4px;
+    min-height: 72px;
 }
 
 .button {

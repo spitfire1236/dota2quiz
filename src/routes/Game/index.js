@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-
-import { getRandom } from 'utils';
+import { getRandom, shuffle } from 'utils';
 
 import Item from 'components/Item';
 import GameOver from 'components/GameOver';
+import Tooltip from 'components/Tooltip';
+import ItemTooltip from 'components/ItemTooltip';
 
 import styles from './styles.css';
 
@@ -13,17 +14,21 @@ const range = (max, step = 1) => [...new Array(max).keys((item, index) => index 
 class Game extends Component {
     constructor(props) {
         super(props);
+        const { randomItem, randomComponents, selected, components } = this.getRandomItem();
+
         this.state = {
+            components,
+            randomItem,
             selected: [],
+            randomComponents,
             score: 0,
             combo: 0,
             guesses: props._GUESSES,
-            app: this.getRandomItem(),
             gameover: false,
         };
     }
     componentDidUpdate(prevProps, prevState) {
-        const { app, guesses } = this.state;
+        const { guesses, randomItem } = this.state;
 
         if (guesses == 0) {
             this.setState({
@@ -33,19 +38,20 @@ class Game extends Component {
 
         if (prevState.guesses !== guesses) return;
 
-        if (this.state.selected.length === this.componentsLength) {
-            const validate = app.randomItem.components.every(
-                item => this.state.selected.indexOf(item) !== -1
-            );
+        if (this.state.selected.length === randomItem.components.length) {
+            const validate = randomItem.components.every(item => this.state.selected.indexOf(item) !== -1);
 
             if (validate) {
+                const { selected, randomItem, randomComponents } = this.getRandomItem();
+
                 this.setState(prevState => ({
                     selected: [],
+                    randomItem,
+                    randomComponents,
                     score: prevState.score
                         ? prevState.score + this.props._ANSWER_POINT
                         : prevState.score + this.props._INITIAL_POINT,
                     combo: prevState.combo + 1,
-                    app: this.getRandomItem(),
                 }));
                 return;
                 // get new random item
@@ -76,79 +82,79 @@ class Game extends Component {
 
         const createdItems = allItems.filter(item => item.created && item.components);
         const allIdsCreatedItems = createdItems.map(item => item.id);
-        const randomIndex = getRandom(allIdsCreatedItems.length);
-        const randomId = allIdsCreatedItems[randomIndex];
-        const randomItem = createdItems.find(item => item.id === randomId);
 
-        this.componentsLength = randomItem.components.length;
-        const needItems = _RANDOM_ITEMS - this.componentsLength;
+        const index = getRandom(allIdsCreatedItems.length);
+        const id = allIdsCreatedItems[index];
+        const item = createdItems.find(item => item.id === id);
+        const { components } = item;
+        const length = components.length;
+
+        const needItems = _RANDOM_ITEMS - length;
         const arrayOfItems = range(needItems).map(item => {
             const index = getRandom(baseItems.length);
 
             return baseItems[index];
         });
 
-        const dataComponents = randomItem.components.map(name => ({ ...itemdata[name], name: name }));
-        const selected = range(this.componentsLength);
-        const randomComponents = [...dataComponents, ...arrayOfItems].sort((a, b) => a.id - b.id);
-        console.log(randomItem);
-        return { randomItem, randomComponents, selected };
+        const dataComponents = components.map(name => ({ ...itemdata[name], name: name }));
+        const selected = range(length);
+        const randomComponents = shuffle([...dataComponents, ...arrayOfItems]);
+
+        return { randomItem: item, randomComponents, selected };
     }
     handleClickItem = name => {
-        if (this.state.selected.length === this.componentsLength) return;
+        if (this.state.selected.length === this.state.randomItem.components.length) return;
 
         this.setState(prevState => ({
             selected: [...prevState.selected, name],
         }));
     };
     handleClickRecipeItem = name => {
-        console.log(name);
         this.setState(prevState => ({
             selected: prevState.selected.filter(item => item !== name),
         }));
     };
     render() {
         const { itemdata } = this.props;
-        const { score, app, selected, guesses, combo, gameover } = this.state;
+        const { score, randomItem, randomComponents, selected, guesses, combo, gameover } = this.state;
 
         const game = (
-            <div>
-                <div className={styles.inner}>
-                    <div className={styles.randomItem}>
-                        <Item {...app.randomItem} />
-                        <ol>
-                            {app.randomItem.components.map((comp, index) => (
-                                <li key={index}>
-                                    <b>{comp}</b>
-                                </li>
-                            ))}
-                        </ol>
-                    </div>
-                    <div className={styles.buttons}>
-                        {selected.map((item, index) => (
-                            <div key={index} className={styles.button}>
-                                {itemdata[item] ? (
+            <div className={styles.inner}>
+                <div className={styles.randomItem}>
+                    <Tooltip tooltip={<ItemTooltip {...randomItem} />}>
+                        <Item {...randomItem} />
+                    </Tooltip>
+                    <ol hidden>
+                        {randomItem.components.map((comp, index) => (
+                            <li key={index}>
+                                <b>{comp}</b>
+                            </li>
+                        ))}
+                    </ol>
+                </div>
+                <div className={styles.buttons}>
+                    {selected.map((item, index) => (
+                        <div key={index} className={styles.button}>
+                            {itemdata[item] ? (
+                                <Tooltip tooltip={<ItemTooltip {...itemdata[item]} />}>
                                     <Item
                                         {...itemdata[item]}
                                         name={item}
                                         onClick={this.handleClickRecipeItem}
                                     />
-                                ) : (
-                                    <Item />
-                                )}
-                            </div>
-                        ))}
-                    </div>
+                                </Tooltip>
+                            ) : (
+                                <Item />
+                            )}
+                        </div>
+                    ))}
                 </div>
                 <div className={styles.buttons}>
-                    {app.randomComponents.map((item, index) => (
+                    {randomComponents.map((item, index) => (
                         <div key={index} className={styles.button}>
-                            <Item
-                                img={item.img}
-                                name={item.name}
-                                dname={item.dname}
-                                onClick={this.handleClickItem}
-                            />
+                            <Tooltip tooltip={<ItemTooltip {...item} />}>
+                                <Item {...item} name={item.name} onClick={this.handleClickItem} />
+                            </Tooltip>
                         </div>
                     ))}
                 </div>

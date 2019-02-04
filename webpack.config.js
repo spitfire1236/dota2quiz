@@ -241,9 +241,15 @@ const config = {
             template: 'public/index.html',
         }),
         new HtmlWebpackHarddiskPlugin(),
-        new CopyWebpackPlugin([{ from: 'public/images', to: '../images', cache: { key: '[hash:8]' } }], {
-            copyUnmodified: true,
-        }),
+        new CopyWebpackPlugin(
+            [
+                { from: 'public/images', to: '../images', cache: { key: '[hash:8]' } },
+                { from: 'public/favicon.ico', to: '../' },
+            ],
+            {
+                copyUnmodified: true,
+            }
+        ),
     ],
     stats: {
         hash: false,

@@ -6,16 +6,24 @@ import 'destyle.css';
 import './main.css';
 import App from './App';
 
+if (0 && process.env.NODE_ENV !== 'production') {
+    const { whyDidYouUpdate } = require('why-did-you-update'); // eslint-disable-line
+    whyDidYouUpdate(React);
+}
+
 import('./data.json').then(({ default: data }) => {
     const INITIAL_DATA = Object.entries(data.itemdata).reduce((obj, [key, value]) => {
         if (!value.cost) return obj;
         if (value.id === 1032) return obj; // "Pocket Roshan"
 
+        const image = value.img.replace(/\?\d{1,}$/, '');
+
         return {
             ...obj,
             [key]: {
                 ...value,
-                img: `/images/items/${value.img}`,
+                img: `/images/items/${image}`,
+                webp: `/images/items/${image.replace(/\.(png|jpg)$/, '.webp')}`,
             },
         };
     }, {});
@@ -26,14 +34,6 @@ import('./data.json').then(({ default: data }) => {
     }));
     const baseItems = allItems.filter(item => !item.created);
 
-    // get random item by index and return id
-    // u can set id of item
-    const createdItems = allItems.filter(item => item.created && item.components);
-    const allIdsCreatedItems = createdItems.map(item => item.id);
-    const randomIndex = getRandom(allIdsCreatedItems.length);
-    const randomId = 214 || allIdsCreatedItems[randomIndex];
-    const randomItem = createdItems.find(item => item.id === randomId);
-
     const initalProps = {
         _INITIAL_POINT: 200,
         _RANDOM_ITEMS: 8,
@@ -43,8 +43,6 @@ import('./data.json').then(({ default: data }) => {
 
         baseItems,
         allItems,
-        randomItem,
-        itemsWithComponents: createdItems,
         itemdata: INITIAL_DATA,
     };
 

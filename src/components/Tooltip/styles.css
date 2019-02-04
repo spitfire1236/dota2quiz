@@ -1,0 +1,17 @@
+.wrapper {
+    position: relative;
+}
+
+.tooltip {
+    position: absolute;
+    width: 320px;
+    z-index: 15000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease 0.1s;
+
+    &.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}

@@ -64,7 +64,7 @@ export default class Card extends Component {
                 )}
                 {notes && <div className={styles.notes} dangerouslySetInnerHTML={createMarkup(notes)} />}
                 {lore && <div className={styles.lore}>{lore}</div>}
-                {builds.length ? (
+                {builds && builds.length ? (
                     <div className={styles.build}>
                         <div className={styles.title}>
                             <span className="smaller">Builds from</span>
