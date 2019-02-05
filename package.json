@@ -50,8 +50,8 @@
         "webpack-cli": "^3.2.1"
     },
     "devDependencies": {
-        "@hot-loader/react-dom": "^16.8.0-alpha.0",
         "babel-eslint": "^10.0.1",
+        "es6-promise": "^4.2.5",
         "eslint": "^5.13.0",
         "eslint-config-airbnb": "^17.1.0",
         "eslint-config-prettier": "^4.0.0",
@@ -63,6 +63,7 @@
         "imagemin-jpegtran": "^6.0.0",
         "imagemin-pngquant": "^7.0.0",
         "imagemin-webp": "^5.0.0",
+        "isomorphic-fetch": "^2.2.1",
         "request": "^2.88.0",
         "rimraf": "^2.6.3",
         "serve": "^10.1.1",

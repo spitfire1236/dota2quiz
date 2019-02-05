@@ -6,7 +6,7 @@ const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
 const imageminWebp = require('imagemin-webp');
 
-const json = require('../src/data.json');
+const json = require('../src/data2.json');
 
 const dir = './public/source';
 const output = './public/images/items';
@@ -40,9 +40,9 @@ Object.values(json.itemdata).forEach((item, index, array) => {
                                 }),
                             ],
                         }),
-                        imagemin([`${dir}/*.{jpg,png}`], output, {
-                            use: [imageminWebp()],
-                        }),
+                        // imagemin([`${dir}/*.{jpg,png}`], output, {
+                        //     use: [imageminWebp()],
+                        // }),
                         // imagemin([`${dir}/*.{png}`], output, {
                         //     use: [imageminWebp({ lossless: true })],
                         // }),
@@ -53,7 +53,7 @@ Object.values(json.itemdata).forEach((item, index, array) => {
                             rimraf.sync(dir);
                         })
                         .catch(error => console.log(error));
-                }, 1000);
+                }, 2000);
             }
         });
 });

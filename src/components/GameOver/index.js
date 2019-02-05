@@ -4,32 +4,25 @@ import { Transition, animated } from 'react-spring';
 import styles from './styles.css';
 
 export default class GameOver extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        items: [],
+    };
 
-        this.state = {
-            items: [],
-        };
-    }
     componentDidMount() {
         setTimeout(() => this.setState({ items: ['GAME OVER!'] }), 0);
         setTimeout(() => this.setState({ items: ['YOU LOSE!'] }), 2000);
         setTimeout(() => this.setState({ items: ['TRY HARD!'] }), 4000);
     }
+
     handleClick = () => {
         const { onClick } = this.props;
 
         if (onClick) onClick();
     };
+
     render() {
         const { score } = this.props;
         const { items } = this.state;
-
-        const mainTexts = [
-            { text: 'GAME OVER!', key: '1' },
-            { text: 'YOU LOSE!', key: '2' },
-            { text: 'TRY HARD!', key: '3' },
-        ];
 
         return (
             <div className={styles.gameOver}>
@@ -41,7 +34,9 @@ export default class GameOver extends Component {
                         leave={{ opacity: 0 }}
                     >
                         {item => props => (
-                            <animated.div className={styles.gameOverTitle} style={props} children={item} />
+                            <animated.div className={styles.gameOverTitle} style={props}>
+                                {item}
+                            </animated.div>
                         )}
                     </Transition>
                 </div>

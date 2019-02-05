@@ -1,23 +1,31 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import classnames from 'classnames/bind';
 
 import styles from './styles.css';
 import placeholder from './images/item_slot_unknown.png';
 
-export default class Item extends Component {
+const cx = classnames.bind(styles);
+
+export default class Item extends PureComponent {
+    static defaultProps = {
+        disabled: false,
+    };
+
     handleClick = () => {
         const { onClick, name } = this.props;
 
         if (onClick) onClick(name);
     };
+
     render() {
-        const { dname, img, webp } = this.props;
+        const { dname, img, disabled } = this.props;
+        const innerClassName = cx(styles.inner, {
+            disabled,
+        });
 
         return (
-            <div className={styles.inner} onClick={this.handleClick}>
-                <picture className={styles.image}>
-                    <source srcSet={webp} type="image/webp" />
-                    <img srcSet={img} alt={dname} title={dname} />
-                </picture>
+            <div className={innerClassName} onClick={this.handleClick}>
+                <img src={`/images/items/${img}` || placeholder} alt={dname} title={dname} />
             </div>
         );
     }

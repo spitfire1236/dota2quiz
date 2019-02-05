@@ -1,3 +1,7 @@
+import React, { Component } from 'react';
+
+import ItemTooltip from 'components/ItemTooltip';
+
 export default class Items extends Component {
     render() {
         const { allItems, itemdata } = this.props;

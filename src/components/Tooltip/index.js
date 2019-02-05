@@ -1,24 +1,28 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import classNames from 'classnames/bind';
 
 import styles from './styles.css';
+
 const cx = classNames.bind(styles);
 
-export default class Tooltip extends Component {
+export default class Tooltip extends PureComponent {
     state = {
         show: false,
     };
+
     handleMouseEnter = () => {
         this.setState({
             show: true,
         });
     };
+
     handleMouseOver = () => {
         this.setState({
             show: false,
         });
     };
+
     render() {
         const { children, tooltip } = this.props;
         const { show } = this.state;
