@@ -11,7 +11,50 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import('./data2.json').then(({ default: data }) => {
-    const allItems = Object.entries(data.itemdata).map(([name, value]) => ({
+    // add recipe
+    const itemdata = Object.entries(data.itemdata).reduce((obj, [key, value]) => {
+        if (value.components) {
+            const recipe = value.components.some((name, index) => /recipe/.test(name));
+
+            if (recipe) {
+                const newComponents = recipe
+                    ? value.components.filter(name => !/recipe/.test(name))
+                    : value.components;
+
+                return {
+                    ...obj,
+                    [key]: {
+                        ...value,
+                        components: [...newComponents, 'recipe'],
+                    },
+                };
+            } else {
+                const componentsCost = value.components.reduce((sum, name) => {
+                    const item = data.itemdata[name];
+                    const cost = item ? item.cost : 0;
+
+                    return sum + cost;
+                }, 0);
+
+                if (componentsCost !== value.cost) {
+                    return {
+                        ...obj,
+                        [key]: {
+                            ...value,
+                            components: [...value.components, 'recipe'],
+                        },
+                    };
+                }
+            }
+        }
+
+        return {
+            ...obj,
+            [key]: value,
+        };
+    }, {});
+
+    const allItems = Object.entries(itemdata).map(([name, value]) => ({
         ...value,
         name,
     }));
@@ -28,7 +71,7 @@ import('./data2.json').then(({ default: data }) => {
 
         baseItems,
         allItems,
-        itemdata: data.itemdata,
+        itemdata,
     };
 
     render(<App {...initalProps} />, document.querySelector('#root'));

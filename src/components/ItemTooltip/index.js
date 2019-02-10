@@ -17,7 +17,7 @@ export default ({ dname, img, desc, attrib, notes, cost, lore, builds, mc, cd })
             <div className={styles.avatar}>
                 <div className={styles.image}>
                     <a href="/items/power-treads">
-                        <img src={img} title="" alt={dname} />
+                        <img src={`/images/items/${img}`} title="" alt={dname} />
                     </a>
                 </div>
             </div>
@@ -37,7 +37,7 @@ export default ({ dname, img, desc, attrib, notes, cost, lore, builds, mc, cd })
         {desc && (
             <div className={styles.description}>
                 <div className={styles.descriptionBlock} dangerouslySetInnerHTML={createMarkup(desc)} />
-                {(cd || mc) && (
+                {cd || mc ? (
                     <div className={styles.cooldownAndCost}>
                         {cd && (
                             <div className={styles.cooldown}>
@@ -52,6 +52,8 @@ export default ({ dname, img, desc, attrib, notes, cost, lore, builds, mc, cd })
                             </div>
                         )}
                     </div>
+                ) : (
+                    ''
                 )}
             </div>
         )}

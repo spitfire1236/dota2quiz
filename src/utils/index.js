@@ -13,4 +13,4 @@ export const shuffle = array => {
     return newArray;
 };
 
-export const range = (max, step = 1) => [...new Array(max).keys((item, index) => index + step)];
+export const range = max => [...new Array(max).keys()];

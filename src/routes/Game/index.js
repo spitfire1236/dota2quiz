@@ -3,10 +3,12 @@ import { getRandom, shuffle, range } from 'utils';
 
 import Item from 'components/Item';
 import GameOver from 'components/GameOver';
-import Tooltip from 'components/Tooltip';
+import createTooltip from 'components/Tooltip';
 import ItemTooltip from 'components/ItemTooltip';
 
 import styles from './styles.css';
+
+const CreateTooltip = createTooltip(props => <Item {...props} />);
 
 class Game extends Component {
     constructor(props) {
@@ -128,9 +130,7 @@ class Game extends Component {
         const game = (
             <div className={styles.inner}>
                 <div className={styles.randomItem}>
-                    <Tooltip tooltip={<ItemTooltip {...randomItem} />}>
-                        <Item {...randomItem} />
-                    </Tooltip>
+                    <CreateTooltip {...randomItem} />
                     <ol hidden>
                         {randomItem.components.map((comp, index) => (
                             <li key={index}>
@@ -146,13 +146,11 @@ class Game extends Component {
                         return (
                             <div key={index} className={styles.button}>
                                 {dataItem && (
-                                    <Tooltip tooltip={<ItemTooltip {...dataItem} />}>
-                                        <Item
-                                            {...dataItem}
-                                            name={item}
-                                            onClick={this.handleClickRecipeItem}
-                                        />
-                                    </Tooltip>
+                                    <CreateTooltip
+                                        {...dataItem}
+                                        name={item}
+                                        onClick={this.handleClickRecipeItem}
+                                    />
                                 )}
                             </div>
                         );
@@ -161,24 +159,14 @@ class Game extends Component {
                 <div className={styles.buttons}>
                     {randomComponents.map((item, index) => (
                         <div key={index} className={styles.button}>
-                            <Tooltip tooltip={<ItemTooltip {...item} />}>
-                                <Item
-                                    {...item}
-                                    name={item.name}
-                                    onClick={this.handleClickItem}
-                                    disabled={selected.indexOf(item.name) !== -1}
-                                />
-                            </Tooltip>
+                            <CreateTooltip
+                                {...item}
+                                name={item.name}
+                                onClick={this.handleClickItem}
+                                disabled={selected.indexOf(item.name) !== -1}
+                            />
                         </div>
                     ))}
-                    <div className={styles.button}>
-                        <Item
-                            {...itemdata.recipe}
-                            name="recipe"
-                            onClick={this.handleClickItem}
-                            disabled={selected.indexOf('recipe') !== -1}
-                        />
-                    </div>
                 </div>
                 <div className={styles.score}>
                     <div>Осталось попыток: {guesses}</div>
